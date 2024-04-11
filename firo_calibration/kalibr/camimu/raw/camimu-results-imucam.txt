@@ -1,0 +1,120 @@
+Calibration results
+===================
+Normalized Residuals
+----------------------------
+Reprojection error (cam0):     mean 0.39260031055951694, median 0.36527657572499167, std: 0.22539199387133388
+Reprojection error (cam1):     mean 0.5271905114026224, median 0.4856549977794686, std: 0.29729493514255634
+Gyroscope error (imu0):        mean 2.7750129496144025, median 2.250423055463166, std: 2.006476335633581
+Accelerometer error (imu0):    mean 2.3325219323804736, median 1.607638363669794, std: 2.348309609205099
+
+Residuals
+----------------------------
+Reprojection error (cam0) [px]:     mean 0.39260031055951694, median 0.36527657572499167, std: 0.22539199387133388
+Reprojection error (cam1) [px]:     mean 0.5271905114026224, median 0.4856549977794686, std: 0.29729493514255634
+Gyroscope error (imu0) [rad/s]:     mean 0.009577077899503758, median 0.007766622102431918, std: 0.006924717296380114
+Accelerometer error (imu0) [m/s^2]: mean 0.05679554877565932, median 0.039145056614428124, std: 0.05717996949929737
+
+Transformation (cam0):
+-----------------------
+T_ci:  (imu0 to cam0): 
+[[-0.00028958  0.99987861 -0.01557847  0.07345809]
+ [ 0.9999114   0.00049684  0.01330191 -0.002977  ]
+ [ 0.01330804 -0.01557324 -0.99979016 -0.00181775]
+ [ 0.          0.          0.          1.        ]]
+
+T_ic:  (cam0 to imu0): 
+[[-0.00028958  0.9999114   0.01330804  0.0030222 ]
+ [ 0.99987861  0.00049684 -0.01557324 -0.073476  ]
+ [-0.01557847  0.01330191 -0.99979016 -0.0006334 ]
+ [ 0.          0.          0.          1.        ]]
+
+timeshift cam0 to imu0: [s] (t_imu = t_cam + shift)
+0.00010083893832164594
+
+
+Transformation (cam1):
+-----------------------
+T_ci:  (imu0 to cam1): 
+[[-0.00678807  0.99993249 -0.0094308  -0.00177984]
+ [ 0.99989691  0.00690655  0.01258849 -0.00258219]
+ [ 0.01265277 -0.00934438 -0.99987629 -0.00153761]
+ [ 0.          0.          0.          1.        ]]
+
+T_ic:  (cam1 to imu0): 
+[[-0.00678807  0.99989691  0.01265277  0.0025893 ]
+ [ 0.99993249  0.00690655 -0.00934438  0.00178319]
+ [-0.0094308   0.01258849 -0.99987629 -0.00152169]
+ [ 0.          0.          0.          1.        ]]
+
+timeshift cam1 to imu0: [s] (t_imu = t_cam + shift)
+0.00010164273830282354
+
+Baselines:
+----------
+Baseline (cam0 to cam1): 
+[[ 0.99995999 -0.00641611 -0.0062337  -0.07526542]
+ [ 0.00642006  0.9999792   0.00061326 -0.00007574]
+ [ 0.00622964 -0.00065326  0.99998038 -0.00017945]
+ [ 0.          0.          0.          1.        ]]
+baseline norm:  0.0752656701134383 [m]
+
+
+Gravity vector in target coords: [m/s^2]
+[ 0.21575155 -9.67815431 -1.56690881]
+
+
+Calibration configuration
+=========================
+
+cam0
+-----
+  Camera model: pinhole
+  Focal length: [587.2901024019953, 587.1154549742607]
+  Principal point: [617.0473192410899, 356.0440445462964]
+  Distortion model: equidistant
+  Distortion coefficients: [-0.0014582796924011618, -0.02183517687457206, 0.020676501013725063, -0.005646080076670184]
+  Type: aprilgrid
+  Tags: 
+    Rows: 6
+    Cols: 6
+    Size: 0.0294 [m]
+    Spacing 0.00882 [m]
+
+cam1
+-----
+  Camera model: pinhole
+  Focal length: [577.6265062804041, 577.9572999995758]
+  Principal point: [612.7544922518928, 384.8897581184422]
+  Distortion model: equidistant
+  Distortion coefficients: [0.007594083288128868, -0.04456216926829111, 0.05003867871344342, -0.015735328473015873]
+  Type: aprilgrid
+  Tags: 
+    Rows: 6
+    Cols: 6
+    Size: 0.0294 [m]
+    Spacing 0.00882 [m]
+
+
+
+IMU configuration
+=================
+
+IMU0:
+ ----------------------------
+  Model: calibrated
+  Update rate: 200
+  Accelerometer:
+    Noise density: 0.0017217637752067734 
+    Noise density (discrete): 0.0243494168210012 
+    Random walk: 0.00012088774782520467
+  Gyroscope:
+    Noise density: 0.0002440355000012493
+    Noise density (discrete): 0.0034511831380226623 
+    Random walk: 3.3735481202874915e-06
+  T_ib (imu0 to imu0)
+    [[1. 0. 0. 0.]
+     [0. 1. 0. 0.]
+     [0. 0. 1. 0.]
+     [0. 0. 0. 1.]]
+  time offset with respect to IMU0: 0.0 [s]
+

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="torso" params="prefix:='' material">
+    <xacro:property name="inertial" value="${xacro.load_yaml('$(find firo_description)/config/inertial/torso.yaml')}" />
+    <xacro:property name="_prefix" value="${prefix + '_' if prefix else ''}"/>
+    <link name="${_prefix}torso">
+      <visual>
+        <material name="${material}"/>
+        <geometry>
+          <mesh filename="package://firo_description/meshes/visual/torso.stl"/>
+        </geometry>
+      </visual>
+      <inertial>
+        <mass value="${inertial.mass}" />
+        <origin xyz="0 0 0" />
+        <inertia  ixx="${inertial.ixx}" ixy="${inertial.ixy}" ixz="${inertial.ixz}" iyy="${inertial.iyy}" iyz="${inertial.iyz}" izz="${inertial.izz}" />
+      </inertial>
+      <collision>    
+        <geometry> 
+          <mesh filename="package://firo_description/meshes/collision/torso.stl"/>
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </collision>
+    </link>
+    <gazebo reference="${_prefix}torso">
+      <visual>  
+        <xacro:element xacro:name="xacro:${material}" />
+      </visual> 
+    </gazebo>
+  </xacro:macro>
+</robot>
