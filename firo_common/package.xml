@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>firo_common</name>
+  <version>1.0.0</version>
+  <description>FIRO common packages</description>
+  <maintainer email="gabriel@gabrielb.dev">Gabriel Brzeziński</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>firo_calibration</exec_depend>
+  <exec_depend>firo_control</exec_depend>
+  <exec_depend>firo_description</exec_depend>
+  
+  <export>
+    <metapackage/>
+  </export>
+</package>
