@@ -5,16 +5,16 @@
         ],
         "plugins": [
                 [
-                        [
-                                "@semantic-release/commit-analyzer",
-                                {
-                                        "preset": "conventionalcommits"
-                                }
-                        ],
+                        "@semantic-release/exec",
                         {
                                 "verifyReleaseCmd": "echo \"next_version=${nextRelease.version}\" >> $GITHUB_OUTPUT"
                         }
                 ],
-                "@semantic-release/commit-analyzer"
+                [
+                        "@semantic-release/commit-analyzer",
+                        {
+                                "preset": "conventionalcommits"
+                        }
+                ]
         ]
 }
