@@ -1,6 +1,3 @@
-# This workflow creates docker image based on main branch and publishes it to project's container registry.
-# It doesn't use any cache and performs clean build, so it may take longer than other jobs.
-
 on:
   push:
     branches:
