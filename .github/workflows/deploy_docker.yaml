@@ -62,7 +62,7 @@ jobs:
         with:
           file: Dockerfile
           push: true
-          tags: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.next_version}}, ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.branch}}
+          tags: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.next_version}}, ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.branch}}
           platforms: ${{ env.PLATFORM }}
-          cache-from: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.branch}}
+          cache-from: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.branch}}
           build-args: BUILDKIT_INLINE_CACHE=1
