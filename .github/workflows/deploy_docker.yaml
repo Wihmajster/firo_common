@@ -32,7 +32,7 @@ jobs:
         id: semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release -t "${{GITHUB_REF_NAME}}-\${version}"
+        run: npx semantic-release -t "${{env.GITHUB_REF_NAME}}-\${version}"
 
       # github.repository_owner can contain uppercase chars,
       # but docker repository address must be all lowercase
@@ -63,7 +63,7 @@ jobs:
         with:
           file: Dockerfile
           push: true
-          tags: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.next_version}}, ${{ env.MAIN_IMAGE }}:${{GITHUB_REF_NAME}}
+          tags: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.next_version}}, ${{ env.MAIN_IMAGE }}:${{env.GITHUB_REF_NAME}}
           platforms: ${{ env.PLATFORM }}
-          cache-from: ${{ env.MAIN_IMAGE }}:${{GITHUB_REF_NAME}}
+          cache-from: ${{ env.MAIN_IMAGE }}:${{env.GITHUB_REF_NAME}}
           build-args: BUILDKIT_INLINE_CACHE=1
