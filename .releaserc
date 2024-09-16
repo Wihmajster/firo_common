@@ -5,7 +5,12 @@
         ],
         "plugins": [
                 [
-                        "@semantic-release/exec",
+                        [
+                                "@semantic-release/commit-analyzer",
+                                {
+                                        "preset": "conventionalcommits"
+                                }
+                        ],
                         {
                                 "verifyReleaseCmd": "echo \"next_version=${nextRelease.version}\" >> $GITHUB_OUTPUT"
                         }
