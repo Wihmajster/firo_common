@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -24,9 +24,9 @@ jobs:
         run: echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >>${GITHUB_ENV}
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version: 20
 
       - name: Install dependencies
         run: npm install -D semantic-release @semantic-release/exec
@@ -62,11 +62,14 @@ jobs:
 
       - name: Build and Push image
         if: ${{ steps.semantic-release.outputs.next_version || false }}
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           file: Dockerfile
           push: true
-          tags: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.next_version}}, ${{ env.MAIN_IMAGE }}:${{env.BRANCH}}
+          provenance: false
+          tags: |
+            ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.next_version}}
+            ${{ env.MAIN_IMAGE }}:${{env.BRANCH}}
           platforms: ${{ env.PLATFORM }}
           cache-from: ${{ env.MAIN_IMAGE }}:${{env.BRANCH}}
           build-args: BUILDKIT_INLINE_CACHE=1
