@@ -26,7 +26,7 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install -D semantic-release @semantic-release/exec
+        run: npm install -D semantic-release @semantic-release/exec conventional-changelog-conventionalcommits
 
       - name: Tag version
         id: semantic-release
