@@ -1,4 +1,8 @@
 {
+        "branches": [
+                "main",
+                "humble"
+        ],
         "plugins": [
                 [
                         "@semantic-release/exec",
