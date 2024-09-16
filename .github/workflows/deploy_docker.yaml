@@ -1,0 +1,68 @@
+# This workflow creates docker image based on main branch and publishes it to project's container registry.
+# It doesn't use any cache and performs clean build, so it may take longer than other jobs.
+
+on:
+  push:
+    branches:
+      - "main"
+jobs:
+  deploy-main-image:
+    name: Build and deploy main docker image
+    runs-on: ubuntu-latest
+    env:
+      PLATFORM: linux/amd64
+      MAIN_IMAGE: ghcr.io/${{ github.repository_owner }}/firo_common
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+
+      - name: Install dependencies
+        run: npm install -D semantic-release @semantic-release/exec
+
+      - name: Tag version
+        id: semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release -t "humble-\${version}"
+
+      # github.repository_owner can contain uppercase chars,
+      # but docker repository address must be all lowercase
+      - name: lowercase image name
+        if: ${{ steps.semantic-release.next_version || false }}
+        run: |
+          echo "MAIN_IMAGE=${MAIN_IMAGE,,}" >>${GITHUB_ENV}
+
+      - name: Set up QEMU
+        if: ${{ steps.semantic-release.next_version || false }}
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        if: ${{ steps.semantic-release.next_version || false }}
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Container Registry
+        if: ${{ steps.semantic-release.next_version || false }}
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push image
+        if: ${{ steps.semantic-release.next_version || false }}
+        uses: docker/build-push-action@v3
+        with:
+          file: Dockerfile
+          push: true
+          tags: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.next_version}}, ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.branch}}
+          platforms: ${{ env.PLATFORM }}
+          cache-from: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.branch}}
+          build-args: BUILDKIT_INLINE_CACHE=1
