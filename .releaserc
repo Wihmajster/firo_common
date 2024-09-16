@@ -3,7 +3,7 @@
                 [
                         "@semantic-release/exec",
                         {
-                                "verifyReleaseCmd": "echo \"next_version=${nextRelease.version}\" >> $GITHUB_OUTPUT && echo \"branch=${branch.name}\" >> $GITHUB_OUTPUT"
+                                "verifyReleaseCmd": "echo \"next_version=${nextRelease.version}\" >> $GITHUB_OUTPUT"
                         }
                 ],
                 "@semantic-release/commit-analyzer"
