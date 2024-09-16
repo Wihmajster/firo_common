@@ -20,6 +20,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Extract branch name
+        run: echo "BRANCH=$(git rev-parse --abbrev-ref HEAD)" >>${GITHUB_ENV}
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -32,7 +35,7 @@ jobs:
         id: semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release -t "${{env.GITHUB_REF_NAME}}-\${version}"
+        run: npx semantic-release -t "${{env.BRANCH}}-\${version}"
 
       # github.repository_owner can contain uppercase chars,
       # but docker repository address must be all lowercase
@@ -63,7 +66,7 @@ jobs:
         with:
           file: Dockerfile
           push: true
-          tags: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.next_version}}, ${{ env.MAIN_IMAGE }}:${{env.GITHUB_REF_NAME}}
+          tags: ${{ env.MAIN_IMAGE }}:${{steps.semantic-release.outputs.next_version}}, ${{ env.MAIN_IMAGE }}:${{env.BRANCH}}
           platforms: ${{ env.PLATFORM }}
-          cache-from: ${{ env.MAIN_IMAGE }}:${{env.GITHUB_REF_NAME}}
+          cache-from: ${{ env.MAIN_IMAGE }}:${{env.BRANCH}}
           build-args: BUILDKIT_INLINE_CACHE=1
